@@ -1,4 +1,11 @@
-﻿﻿# Training Log App 🏋️
+  ![Private Code](https://img.shields.io/badge/Source%20Code-Available%20on%20Request-red)
+🚨 **SOURCE CODE AVAILABLE UPON REQUEST**
+
+This repository contains documentation and screenshots only.  
+The full application source code is private, but can be shared with recruiters or hiring managers upon request.
+
+  
+  # Training Log App 🏋️
 
 A modern Android fitness tracking application built with Jetpack Compose that helps users log workouts, track progress, set goals, and analyze their training performance over time.
 
