@@ -6,6 +6,8 @@ A personal project by [Eeri Hyppänen](https://github.com/eerihyppanen), built w
 
 The full application source is private and available to recruiters and hiring managers on request.
 
+AI assistance: OpenAI Codex was used to assist with development, including code implementation, refactoring, and testing. The project was developed and reviewed under my direction.
+
 ## App gallery
 
 | Log a workout | Review a session | Explore your progress |
