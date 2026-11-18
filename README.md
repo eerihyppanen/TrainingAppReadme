@@ -1,217 +1,91 @@
-  ![Private Code](https://img.shields.io/badge/Source%20Code-Available%20on%20Request-red)
-🚨 **SOURCE CODE AVAILABLE UPON REQUEST**
+# Training Log App
 
-This repository contains documentation and screenshots only.  
-The full application source code is private, but can be shared with recruiters or hiring managers upon request.
+**An Android workout journal for logging sets during training and seeing how performance changes across sessions.**
 
-  
-  # Training Log App 🏋️
+A personal project by [Eeri Hyppänen](https://github.com/eerihyppanen), built with Kotlin, Jetpack Compose, Material 3, and Room.
 
-A modern Android fitness tracking application built with Jetpack Compose that helps users log workouts, track progress, set goals, and analyze their training performance over time.
+The full application source is private and available to recruiters and hiring managers on request.
 
-## 📋 Project Overview
+## App gallery
 
-**Problem**: Gym-goers need an efficient way to track their workouts, monitor progress, and ensure progressive overload without carrying notebooks or juggling complex spreadsheets.
+| Log a workout | Review a session | Explore your progress |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/new-workout.png" width="200" alt="New workout editor with one logged Bench Press set and a fixed Save workout button" /> | <img src="docs/screenshots/history.png" width="200" alt="Workout history showing five dated sessions with expand and edit actions" /> | <img src="docs/screenshots/analytics.png" width="200" alt="Analytics overview showing workout totals, personal records and recent activity" /> |
 
-**Solution**: Training Log App provides a streamlined mobile experience for logging exercises, automatically calculating personal records, visualizing progress with interactive charts, and organizing workouts with templates and goals.
+| Exercise progress | Goals | Templates |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/progress.png" width="200" alt="Bench Press records and an interactive strength progression chart" /> | <img src="docs/screenshots/goals.png" width="200" alt="Bench Press and Squat goals with targets and progress bars" /> | <img src="docs/screenshots/templates.png" width="200" alt="Reusable cardio and strength templates with Start workout buttons" /> |
 
-**Key Highlights**:
-- 📊 **Automatic PR Tracking**: Calculates 1RM, max weight, max reps, and volume automatically
-- 📈 **Progress Visualization**: Interactive charts showing strength trends over time
-- 🎯 **Smart Goal Setting**: Track progress toward specific exercise goals
-- 📝 **Template System**: Save and reuse workout routines
-- 🌓 **Dark/Light Theme**: Comfortable viewing in any lighting condition
-- 💾 **Local-First**: All data stored securely on device using Room database
+| Template workout | Backup and export | Dark mode |
+| :---: | :---: | :---: |
+| <img src="docs/screenshots/template-workout.png" width="200" alt="Cardio template with one completed set, one planned set, and the save count" /> | <img src="docs/screenshots/settings.png" width="200" alt="Settings with theme selection, JSON backup and restore, and CSV export" /> | <img src="docs/screenshots/dark-theme.png" width="200" alt="Bench Press workout entry in dark mode" /> |
 
-## 📱 Features
-### Core Functionality
-- **Workout Logging**: Create and save detailed workout sessions with multiple exercises
-- **Exercise Tracking**: Log sets, reps, and weights for each exercise
-- **Workout History**: View all past workouts with detailed exercise breakdowns
-- **Exercise Search**: Quickly find and view specific exercises from your history
-### Progress & Analytics
-- **Personal Records**: Automatic tracking of your best performances (1RM, max weight, max reps, max volume)
-- **Exercise Progress Charts**: Visual progress tracking with multiple chart types:
-  - Strength progression (estimated 1RM)
-  - Max weight over time
-  - Total volume trends
-  - Average weight progression
-- **Progress Insights**: Percentage improvements and performance metrics
-### Goals & Templates
-- **Goal Setting**: Create and track exercise-specific goals with progress monitoring
-- **Workout Templates**: Save frequently used workout routines for quick access
-- **Template-Based Workouts**: Start new workouts from saved templates
-- **Goal Progress Tracking**: Visual progress bars and completion status
-### User Experience
-- **Dark/Light Theme**: Toggle between themes with persistent preferences
-- **Bottom Navigation**: Easy access to all main sections
-- **Exercise Autocomplete**: Smart suggestions based on previously used exercises
-- **Snackbar Notifications**: User-friendly feedback for actions
-- **Material Design 3**: Modern, clean UI with premium color scheme
-## 🛠️ Technical Stack
-### Architecture & Libraries
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Database**: Room (SQLite)
-- **Navigation**: Jetpack Navigation Compose
-- **Charts**: YCharts library
-- **Minimum SDK**: Android 10 (API 29)
-- **Target SDK**: Android 15 (API 35)
+*Screenshots taken on a Pixel 7 emulator running Android 16 with sample training data.*
 
-### Architecture Explanation
-The app follows **MVVM (Model-View-ViewModel)** architecture pattern:
+## Project overview
 
-- **Model (Data Layer)**: 
-  - Room database entities (`Workout`, `Exercise`, `ExerciseSet`, `Goal`, `WorkoutTemplate`)
-  - Repository pattern (`WorkoutRepository`, `GoalRepository`) for data access abstraction
-  - DAO (Data Access Objects) for database operations
+Logging a set happens in the middle of a workout. Reviewing weeks of progress happens later. I built Training Log around both tasks. During training, the editor keeps the current exercise, its sets, and the save action within reach. Later, History and Analytics let you revisit a session or follow one exercise across multiple workouts.
 
-- **ViewModel**: 
-  - `MainViewModel` manages UI state and business logic
-  - Handles theme preferences, workout data, and template selection
-  - Exposes reactive state using Compose's `State` objects
+## Features
 
-- **View (UI Layer)**: 
-  - Pure Compose UI components
-  - Screens observe ViewModel state and react to changes
-  - Clean separation between UI and business logic
+### Workout logging and history
 
-**Benefits**: Testable code, clear separation of concerns, reactive UI updates, lifecycle-aware components
+- **Three ways to record a set.** Log repetitions and weight, duration, or duration with distance. Exercise names autocomplete from previous workouts.
+- **Less typing between sets.** **Repeat last set** adds a copy of the last logged set while preserving anything already typed in the fields. **Use values** fills the fields from the previous session for the same exercise and measurement type.
+- **An editor that keeps your place.** Each exercise groups the inputs and logged sets. Completed exercises collapse, individual sets can be edited, and a fixed save bar shows the current counts. Validation appears beside the relevant input.
+- **Recover and correct entries.** An unfinished regular or template workout can be resumed after relaunch. Saved workouts can be edited in place, including their date, exercises, and sets. History cards expand for details, and exercise search opens the corresponding progress page.
 
-### Key Dependencies
-```gradle
-- Jetpack Compose BOM
-- Room 2.8.4 (Database)
-- Navigation Compose 2.7.6
-- Material Icons Extended
-- YCharts 2.1.0 (Progress visualization)
+### Analytics and goals
+
+- **Training overview.** See workout, exercise, and set counts, total strength volume, personal records, and recent activity.
+- **Strength progress.** Exercise details show records for weight, reps, and volume, plus estimated one-rep max (1RM) where eligible. Switch between charts for estimated 1RM, maximum weight, volume, and average weight. Select a session to see its date and value.
+- **Timed progress.** Duration and distance have separate charts for timed exercises. The app shows distance when it was recorded and keeps timed sets out of strength records.
+- **Goals.** Track weight, reps, volume, consistency, frequency, or endurance. Goals can have deadlines, notes, and milestones. Progress updates from saved workouts, and filters help find active, completed, or overdue goals.
+
+### Templates, backups, and appearance
+
+- **Reusable routines.** Build a template from scratch or copy a saved workout. Starting a template opens a draft with planned sets. Check off the sets you perform to add them to the saved workout.
+- **Local backup and export.** Settings supports JSON backups of saved workouts, goals with milestones, and templates. Restore previews the import and merges missing records. CSV export produces one row per workout set for spreadsheet analysis.
+- **Light and dark themes.** Material 3 components share a lavender and sage palette, and the app remembers the selected theme. Bottom navigation keeps History, New workout, Analytics, and Goals within reach.
+
+## What changed in the 2.0 milestone
+
+The 2.0 milestone focused on reliable everyday logging. It introduced durable workout drafts, saved-workout editing, inline validation, and completion tracking for template sets. It also added JSON backup and restore, CSV export, and distinct charts for timed training. Underneath, feature-specific ViewModels and a shared read model replaced the original central ViewModel, and Room migrations preserved existing training records.
+
+## Architecture
+
+The app is written in **Kotlin** with **Jetpack Compose**, **Material 3**, and **Navigation Compose**. It runs on Android 10 (API 29) and later. The production app lives in one Gradle module organized by feature. A separate benchmark module runs performance measurements and exercises the optimized build.
+
+```mermaid
+flowchart LR
+    UI["Compose screens"] -->|User actions| VM["Feature ViewModels"]
+    VM -->|Validated writes| Repo["Repositories"]
+    Repo -->|Transactions| DB["Room / SQLite"]
+    DB -->|Observed workouts| Read["Shared workout read model"]
+    Read -->|History and derived analytics| VM
+    VM -->|StateFlow UI state| UI
 ```
-## 🏗️ Project Structure
-```
-app/src/main/java/com/example/traininglogapp/
-├── MainActivity.kt                    # Main entry point
-├── MainViewModel.kt                   # Central ViewModel
-├── ThemePreferences.kt               # Theme persistence
-├── database/
-│   ├── AppDatabase.kt                # Room database
-│   ├── WorkoutDao.kt                 # Workout data access
-│   ├── GoalDao.kt                    # Goal data access
-│   ├── WorkoutRepository.kt          # Workout data layer
-│   ├── GoalRepository.kt             # Goal data layer
-│   ├── Workout.kt                    # Workout entity
-│   ├── Exercise.kt                   # Exercise entity
-│   ├── ExerciseSet.kt                # Set entity
-│   ├── Goal.kt                       # Goal entity
-│   └── WorkoutTemplate.kt            # Template entity
-├── ui/theme/
-│   ├── Theme.kt                      # App theming
-│   ├── Color.kt                      # Color definitions
-│   ├── NewWorkoutScreen.kt           # Workout creation UI
-│   ├── WorkoutList.kt                # History display
-│   ├── AnalyticsPage.kt              # Analytics & records
-│   ├── GoalsAndTemplatesPage.kt      # Goals & templates UI
-│   ├── ExerciseSearchScreen.kt       # Exercise search
-│   ├── ExerciseDetailScreen.kt       # Exercise details
-│   ├── ExerciseProgressChart.kt      # Progress charts
-│   ├── PersonalRecords.kt            # PR calculations
-│   ├── GoalManager.kt                # Goal management
-│   └── TemplateManager.kt            # Template management
-└── res/
-    └── values/
-        └── strings.xml               # Localized strings
-```
-## 🎨 Design
-### Color Scheme
-- **Light Theme**: Clean white cards on light gray background
-- **Dark Theme**: Dark surfaces with high contrast
-- **Accent Colors**: Muted purple (#6C63FF) and soft green (#4CAF50)
-- **Text**: Professional dark gray (#2B2B2B) in light mode
-### Navigation
-- **Bottom Navigation Bar**: Quick access to 4 main sections
-  - History: View past workouts
-  - New Workout: Log new training session
-  - Analytics: View records and statistics
-  - Goals: Manage goals and templates
-- **Floating Action Button**: Quick exercise search from history
 
-## 💡 How It Works
+### State ownership and how a save reaches the screen
 
-### User Flow
-1. **Create Workouts**: Users start a new workout session and add exercises with sets, reps, and weights
-2. **Track Progress**: Every workout is automatically saved and analyzed for personal records
-3. **View Analytics**: Visualize strength progression with interactive charts showing 1RM estimates, max weights, and volume over time
-4. **Set Goals**: Create specific exercise goals (e.g., "Bench Press 100kg") and track progress with visual indicators
-5. **Use Templates**: Save frequently used workout routines as templates for quick workout creation
-6. **Search History**: Quickly find any exercise from workout history using the search feature
+- **Compose screens render state and report actions.** Workout entry, history, analytics, goals, templates, and settings have their own state owners. Each route collects its ViewModel's state with lifecycle awareness.
+- **Repositories handle persistence.** A workout save validates the draft, writes the workout with its exercises and sets in a Room transaction, and then appears in the database observation flow. History and Analytics update from that change, and Goals can recalculate from the same saved history.
+- **The shared read model does the common work once.** It derives one analytics snapshot per distinct saved workout history on a background dispatcher. History, exercise search, goal progress, and workout suggestions share the observed data. Previous-set suggestions are also cached during measurement edits to avoid rescanning unchanged history.
+- **Dependencies are wired at application startup.** An application-scoped container supplies Room, repositories, preferences, the shared read model, and ViewModel factories. Constructor injection lets tests substitute dependencies at those boundaries.
 
-### Key Workflows
-- **New Workout Flow**: Select exercises → Log sets/reps/weights → Save workout → Automatic PR detection
-- **Progress Tracking**: View exercise → See progress charts → Analyze trends → Set new goals
-- **Template Usage**: Create template from workout → Save for reuse → Start workout from template
+### Data model and recovery
 
-### Data Persistence
-All data is stored locally using Room database with proper relationships and cascade deletion. The app uses MVVM architecture to maintain clean separation between UI and business logic.
+| Area | Design decision |
+| --- | --- |
+| Workout structure | A workout has ordered exercises, and each exercise has ordered sets. A stable exercise ID links the same exercise across workouts, templates, goals, and analytics. |
+| Measurements | A set has a defined measurement type. Strength uses repetitions and kilograms. Timed sets store seconds and, where recorded, meters. The UI presents minutes and kilometers. |
+| Schema migrations | Room schema version 5 has tested migration paths from versions 1 through 4. Migrations preserve saved records, backfill exercise identities, and store exercise and set positions explicitly. |
+| Draft recovery | Regular and template drafts store raw text and row IDs in Room. Saved instance state carries the active draft IDs. This lets an unfinished session recover incomplete values and protects it after a failed save. Editing a saved workout uses a separate draft keyed by its workout ID. |
+| Template completion | Completion is stored in the template workout draft. Saving converts only checked rows into workout sets, so planned values never appear as performed sets in History or Analytics. |
+| Backup merge | A versioned JSON format represents the saved records independently of the database file. The preview is read-only. Confirming a restore checks for matching IDs again inside one transaction, imports missing records, and preserves existing local records. |
 
+## Testing and performance
 
-## 📊 Database Schema
-### Tables
-- **workouts**: Stores workout sessions (date, name, notes)
-- **exercises**: Stores exercises within workouts
-- **exercise_sets**: Stores individual sets (reps, weight)
-- **goals**: Stores user fitness goals
-- **workout_templates**: Stores reusable workout templates
-### Relationships
-- One-to-Many: Workout → Exercises
-- One-to-Many: Exercise → Sets
-- Cascade deletion for data integrity
-## 🔧 Configuration
-### Theme Preferences
-Theme selection is persisted using SharedPreferences and automatically restored on app launch.
-### Database Migrations
-Current version: 2
-Note: Using destructive migration for development. Proper migrations should be added for production.
-
-## 🐛 Known Issues
-- None currently reported
-## 🤝 Contributing
-This is a personal project.
-
-## 👤 Author
-**Eeri Hyppänen**
-- GitHub: [@eerihyppanen](https://github.com/eerihyppanen)
-
-## 📱 Screenshots
-
-### Main Features
-<table>
-  <tr>
-    <td align="center"><b>New Workout</b><br/>Log exercises with sets, reps, and weights<br/><br/><img src="https://github.com/user-attachments/assets/e116bd33-57dc-47d4-8c77-dae7d5726bdf" width="200" alt="New Workout Screen"/></td>
-    <td align="center"><b>Workout History</b><br/>View all past workouts chronologically<br/><br/><img src="https://github.com/user-attachments/assets/faf7262f-54da-44d0-afae-5bb8b3c93fde" width="200" alt="Workout History"/></td>
-    <td align="center"><b>Analytics</b><br/>Track personal records and statistics<br/><br/><img src="https://github.com/user-attachments/assets/a80020fb-1983-469b-b202-c03911955809" width="200" alt="Analytics Page"/></td>
-  </tr>
-</table>
-
-### Progress & Goals
-<table>
-  <tr>
-    <td align="center"><b>Progress Charts</b><br/>Visualize strength progression over time<br/><br/><img src="https://github.com/user-attachments/assets/df8ab4f9-87c2-41b9-bcd4-d217a996bfbc" width="200" alt="Progress Charts"/></td>
-    <td align="center"><b>Goals</b><br/>Set goals<br/><br/><img src="https://github.com/user-attachments/assets/bdcc51d1-7a2c-4963-8f77-12f48c116faf" width="200" alt="Goals"/></td>
-    <td align="center"><b>Templates</b><br/>Save workout routines<br/><br/><img src="https://github.com/user-attachments/assets/d041ee4a-4a5a-4c40-9000-50da9820b792" width="200" alt="Templates"/></td>
-  </tr>
-</table>
-
-### Themes
-<table>
-  <tr>
-    <td align="center"><b>Light Theme</b><br/>Clean, professional design<br/><br/><img src="https://github.com/user-attachments/assets/e116bd33-57dc-47d4-8c77-dae7d5726bdf" width="200" alt="Light Theme"/></td>
-    <td align="center"><b>Dark Theme</b><br/>Easy on the eyes for night workouts<br/><br/><img src="https://github.com/user-attachments/assets/093147c6-9691-4ede-9b24-fea662443387" width="200" alt="Dark Theme"/></td>
-  </tr>
-</table>
-
-
-
----
-
-**Version**: 1.0
-**Status**: Active Development
+- **216 local tests passed** for the 2.0 milestone. Coverage includes SQLite migrations, record ordering, failed saves and draft recovery, backup validation and rollback, analytics calculations, navigation, and form interactions.
+- **Debug and release builds passed.** An optimized Pixel 7 emulator run exercised History, exercise charts, Analytics, Goals, and saving a template workout after checking a set.
+- **Performance tooling** uses an isolated benchmark app, a 120-workout sample history, and baseline profiles to compare cold startup and History scrolling. Emulator timing identified a scrolling follow-up. Real-phone timing and the Templates layout in landscape with enlarged text remain areas to check.
